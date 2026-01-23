@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+
+const API_BASE =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:7000"
+    : "https://YOUR-BACKEND-URL.onrender.com";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [msg, setMsg] = useState("");
+
+  useEffect(() => {
+    fetch(`${API_BASE}/health`)
+      .then((res) => res.json())
+      .then((data) => setMsg(data.msg))
+      .catch(() => setMsg("Backend not connected"));
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ color: "white", padding: "40px" }}>
+      <h1>Remote Interview Platform</h1>
+      <p>Backend Status: {msg}</p>
+    </div>
+  );
 }
 
-export default App
+export default App;
