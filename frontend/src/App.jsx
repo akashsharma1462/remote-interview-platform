@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import SignInButton from "@clerk/clerk-react";
+
 
 const API_BASE =
   import.meta.env.MODE === "development"
@@ -16,10 +18,11 @@ function App() {
   }, []);
 
   return (
-    <div style={{ color: "white", padding: "40px" }}>
+    <>
       <h1>Remote Interview Platform</h1>
-      <p>Backend Status: {msg}</p>
-    </div>
+
+      <SignInButton />
+    </>
   );
 }
 
